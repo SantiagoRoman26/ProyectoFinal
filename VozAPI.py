@@ -35,7 +35,7 @@ def getTextoDeVoz():
     # Check the result
     if result.reason == speechsdk.ResultReason.RecognizedSpeech:
         auto_detect_source_language_result = speechsdk.AutoDetectSourceLanguageResult(result)
-        print("Recognized: {} in language {}".format(result.text, auto_detect_source_language_result.language))
+        #print("Recognized: {} in language {}".format(result.text, auto_detect_source_language_result.language))
         return result.text
     elif result.reason == speechsdk.ResultReason.NoMatch:
         print("No se reconocio el idioma.")
@@ -53,7 +53,7 @@ def getAudioDeTexto(texto, nombreAgente, idioma):
         'Authorization': 'Bearer ' + access_token,
         'Content-Type': 'application/ssml+xml',
         'X-Microsoft-OutputFormat': 'riff-24khz-16bit-mono-pcm',
-        'User-Agent': 'YOUR_RESOURCE_NAME'
+        'User-Agent': 'SpeechInterprete'
     }
     xml_body = ElementTree.Element('speak', version='1.0')
     xml_body.set('{http://www.w3.org/XML/1998/namespace}lang', idioma)
@@ -66,7 +66,7 @@ def getAudioDeTexto(texto, nombreAgente, idioma):
 
     response = requests.post(constructed_url, headers=headers, data=body)
     if response.status_code == 200:
-        with open('audio' + '.wav', 'wb') as audio:
+        with open('audiosd' + '.wav', 'wb') as audio:
             audio.write(response.content)
             print("\nStatus code: " + str(response.status_code) + "\nEl audio esta listo.\n")
     else:
